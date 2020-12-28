@@ -31,7 +31,7 @@ class Register extends Component {
 	}
 	}
 	onsubmitRegister = () => {
-		fetch('http://localhost:3001/emailverify',{
+		fetch('https://calm-crag-48112.herokuapp.com/emailverify',{
 			method: 'post',
 			headers:{'Content-type':'application/json'},
 			body:JSON.stringify({
@@ -51,7 +51,7 @@ class Register extends Component {
 			return alert('Email or Password invalid');
 		
 	
-		fetch('http://localhost:3001/register',{
+		fetch('https://calm-crag-48112.herokuapp.com/register',{
 			method: 'post',
 			headers:{'Content-type':'application/json'},
 			body:JSON.stringify({

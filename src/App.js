@@ -10,7 +10,7 @@ import './App.css';
 import Particles from 'react-particles-js';
 
 
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const particlesProps={
 	particles: {
    	number:{
@@ -83,7 +83,7 @@ class App extends Component{
 	}
 	onButtonSubmit = () => {
 		this.setState({ imageUrl: this.state.input });
-		fetch('http://localhost:3001/imageapi',{
+		fetch('https://calm-crag-48112.herokuapp.com/imageapi',{
 			method: 'post',
 			headers:{'Content-type' : 'application/json'},
 			body: JSON.stringify({
@@ -93,8 +93,9 @@ class App extends Component{
 		.then(response => response.json())
     .then(response => {
       this.displayFaceBox(this.calculcateFaceLocation(response));
-    });
-    fetch('http://localhost:3001/image',{
+    })
+    .catch(err=> console.log('api unresponsive'));
+    fetch('https://calm-crag-48112.herokuapp.com/image',{
 			method: 'put',
 			headers:{'Content-type':'application/json'},
 			body:JSON.stringify({
@@ -107,7 +108,7 @@ class App extends Component{
 				this.setState(Object.assign(this.state.user,{entries:data}));
 			}			
 		})
-		.catch(console.log)
+		.catch(err=> console.log('ran into an error'));
 	}
 	
 	render(){
@@ -132,21 +133,21 @@ class App extends Component{
 			}
 		}
 		return (
-	    <div className="App">
-	    	<div>
-		    	<Particles className='particles'
-		      	params={particlesProps}
-		      />
-		      <Navigation
-		      isSignedin={isSignedin}
-		      onRouteChange={this.onRouteChange}
-		      />
-		    </div>
-		    {
-		    	<div>{ RenderSwitch() }</div>
-		    } 
-	    </div>
-  	);
+	    	<div className="App">
+		    	<div>
+			    	<Particles className='particles'
+			      	params={particlesProps}
+			      />
+			      <Navigation
+			      isSignedin={isSignedin}
+			      onRouteChange={this.onRouteChange}
+			      />
+			    </div>
+			    {
+			    	<div>{ RenderSwitch() }</div>
+			    } 
+	    	</div>
+  		);
 	}
 }
 
